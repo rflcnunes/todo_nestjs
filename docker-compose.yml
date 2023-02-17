@@ -17,6 +17,7 @@ services:
       - DB_USERNAME=user
       - DB_PASSWORD=password
       - DB_DATABASE=todo_db
+      - PORT=3000
     networks:
       - todo_network
   db:
