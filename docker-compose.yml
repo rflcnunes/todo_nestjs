@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node
+    restart: always
+    ports:
+      - 3030:3030
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_DATABASE: todo_db
+    networks:
+      - todo_network
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: todo_db
+    networks:
+      - todo_network
+
+volumes:
+  node:
+    driver: local
+
+networks:
+  todo_network:
+    driver: bridge
