@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
+import { TasksModule } from './tasks/tasks.module';
+import { Task } from './typeorm/entities/Task';
 
 @Module({
   imports: [
@@ -14,10 +16,11 @@ import { UsersModule } from './users/users.module';
       username: 'user',
       password: 'password',
       database: 'todo_db',
-      entities: [User],
+      entities: [User, Task],
       synchronize: true,
     }),
     UsersModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
