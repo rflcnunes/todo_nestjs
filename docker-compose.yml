@@ -12,22 +12,31 @@ services:
     volumes:
       - ./:/usr/src/app
     environment:
-      DB_HOST: mysql
-      DB_USER: root
-      DB_PASSWORD: password
-      DB_DATABASE: todo_db
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - DB_DATABASE=todo_db
     networks:
       - todo_network
-
-  mysql:
-    image: mysql:8
+  db:
+    image: mysql
     container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: todo_db
+    networks:
+      - todo_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
     networks:
       - todo_network
 
