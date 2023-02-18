@@ -8,16 +8,16 @@ services:
     container_name: node
     restart: always
     ports:
-      - 3030:3030
+      - ${NODE_PORT}:3030
     volumes:
       - ./:/usr/src/app
     environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USERNAME=user
-      - DB_PASSWORD=password
-      - DB_DATABASE=todo_db
-      - PORT=3000
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - PORT=${NODE_PORT}
     networks:
       - todo_network
   db:
@@ -26,10 +26,10 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: todo_db
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     networks:
       - todo_network
 
