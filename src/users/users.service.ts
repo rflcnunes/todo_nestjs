@@ -13,6 +13,10 @@ export class UsersService {
     @InjectRepository(Task) private taskRepository: Repository<Task>,
   ) {}
 
+  async getAllUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = await this.userRepository.create({
       ...createUserDto,
