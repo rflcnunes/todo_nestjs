@@ -6,6 +6,7 @@ import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './typeorm/entities/Task';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Task } from './typeorm/entities/Task';
     }),
     UsersModule,
     TasksModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
