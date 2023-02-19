@@ -12,6 +12,9 @@ export class Task {
   @Column({ length: 300 })
   description: string;
 
+  @Column({ default: false })
+  completed: boolean;
+
   @Column()
   createdAt: Date;
 
