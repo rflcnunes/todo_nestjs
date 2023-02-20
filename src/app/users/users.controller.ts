@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -16,6 +17,7 @@ import { CreateTaskUserDto } from './dto/CreateTaskUser';
 import { User } from 'src/entities/User';
 import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser';
+import { UsersResponse } from '../interfaces/users.response';
 
 @Controller('users')
 export class UsersController {
@@ -24,24 +26,39 @@ export class UsersController {
   @Get()
   @UseGuards(JwtAuthGuard)
   @HttpCode(200)
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
+  async getAllUsers(): Promise<UsersResponse> {
+    try {
+      const users = await this.userService.getAllUsers();
+      return { info: 'All users', users };
+    } catch (error) {
+      throw new NotFoundException('Users not found');
+    }
   }
 
   @Get(':id')
   @HttpCode(200)
   async getById(@Param('id', ParseIntPipe) id: number): Promise<User> {
-    return this.userService.showById(id);
+    try {
+      return this.userService.showById(id);
+    } catch (error) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
   }
 
   @Post()
   @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
-    const response = await this.userService.createUser(createUserDto);
+    try {
+      const response = await this.userService.createUser(createUserDto);
 
-    const { username } = response;
+      const { username } = response;
 
-    return `User ${username} created`;
+      return `User ${username} created`;
+    } catch (error) {
+      throw new NotFoundException(
+        `User with id ${createUserDto.username} not found`,
+      );
+    }
   }
 
   @Post(':userId/tasks')
@@ -51,7 +68,11 @@ export class UsersController {
     @Param('userId') userId: number,
     @Body() createTaskUserDto: CreateTaskUserDto,
   ): Promise<[User, CreateTaskUserDto]> {
-    return this.userService.createTaskForUser(userId, createTaskUserDto);
+    try {
+      return this.userService.createTaskForUser(userId, createTaskUserDto);
+    } catch (error) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
   }
 
   @Put(':id')
@@ -60,12 +81,20 @@ export class UsersController {
     @Param('id') userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.updateUser(userId, updateUserDto);
+    try {
+      return this.userService.updateUser(userId, updateUserDto);
+    } catch (error) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
   }
 
   @Delete(':id')
   @HttpCode(204)
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    await this.userService.deleteUser(id);
+    try {
+      await this.userService.deleteUser(id);
+    } catch (error) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
   }
 }
