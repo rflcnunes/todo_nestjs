@@ -14,5 +14,6 @@ import { Task } from 'src/typeorm/entities/Task';
   ],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

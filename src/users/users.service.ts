@@ -44,4 +44,12 @@ export class UsersService {
 
     return [user, task];
   }
+
+  async findOne(username: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({
+      where: { username },
+    });
+
+    return user;
+  }
 }

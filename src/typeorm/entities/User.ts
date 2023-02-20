@@ -9,14 +9,11 @@ export class User {
   @Column({ unique: true })
   username: string;
 
-  @Column({ length: 100 })
+  @Column()
   password: string;
 
   @Column()
   createdAt: Date;
-
-  @Column({ nullable: true })
-  authStrategy: string;
 
   @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
