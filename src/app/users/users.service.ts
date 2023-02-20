@@ -31,8 +31,6 @@ export class UsersService {
       createdAt: new Date(),
     });
 
-    console.log(createdUser);
-
     return this.userRepository.save(createdUser);
   }
 
