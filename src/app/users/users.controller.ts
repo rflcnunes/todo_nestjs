@@ -26,6 +26,11 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
+  @Get(':id')
+  async getById(@Param('id', ParseIntPipe) id: number): Promise<User> {
+    return this.userService.showById(id);
+  }
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const response = await this.userService.createUser(createUserDto);
