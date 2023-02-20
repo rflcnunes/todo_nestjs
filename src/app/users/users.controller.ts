@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseIntPipe,
   Post,
@@ -22,16 +23,19 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
   async getAllUsers(): Promise<User[]> {
     return this.userService.getAllUsers();
   }
 
   @Get(':id')
+  @HttpCode(200)
   async getById(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.userService.showById(id);
   }
 
   @Post()
+  @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
     const response = await this.userService.createUser(createUserDto);
 
@@ -42,6 +46,7 @@ export class UsersController {
 
   @Post(':userId/tasks')
   @UseGuards(JwtAuthGuard)
+  @HttpCode(201)
   async createTaskForUser(
     @Param('userId') userId: number,
     @Body() createTaskUserDto: CreateTaskUserDto,
@@ -50,6 +55,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @HttpCode(200)
   async updateUser(
     @Param('id') userId: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -58,6 +64,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.userService.deleteUser(id);
   }
