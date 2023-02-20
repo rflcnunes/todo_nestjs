@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Put,
   Param,
@@ -9,7 +8,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { CreateTaskDto } from './dto/CreateTaskDto';
 import { UpdateTaskDto } from './dto/UpdateTaskDto';
 import { Task } from 'src/entities/Task';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
