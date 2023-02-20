@@ -18,12 +18,6 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
-  @Post()
-  @UseGuards(JwtAuthGuard)
-  async create(@Body() createTaskDto: CreateTaskDto) {
-    return await this.taskService.createTask(createTaskDto);
-  }
-
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll() {
