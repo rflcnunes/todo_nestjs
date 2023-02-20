@@ -2,8 +2,8 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UsersService } from './users.service';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
-import { User } from 'src/typeorm/entities/User';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/entities/User';
+import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {

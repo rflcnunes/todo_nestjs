@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from 'src/typeorm/entities/User';
+import { User } from 'src/entities/User';
 import { CreateUserDto } from './dto/CreateUser.dto';
-import { Task } from 'src/typeorm/entities/Task';
+import { Task } from 'src/entities/Task';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
+import { HashHelper } from 'src/helpers/hash.helper';
 
 @Injectable()
 export class UsersService {
@@ -18,10 +19,19 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    console.log(createUserDto.password);
+    const hashedPassword = await HashHelper.hashWithBcrypt(
+      createUserDto.password,
+    );
+
     const createdUser = await this.userRepository.create({
-      ...createUserDto,
+      username: createUserDto.username,
+      password: hashedPassword,
       createdAt: new Date(),
     });
+
+    console.log(createdUser);
+
     return this.userRepository.save(createdUser);
   }
 

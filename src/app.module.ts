@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { User } from './typeorm/entities/User';
-import { UsersModule } from './users/users.module';
-import { TasksModule } from './tasks/tasks.module';
-import { Task } from './typeorm/entities/Task';
-import { HealthModule } from './health/health.module';
-import { AuthModule } from './auth/auth.module';
+import { User } from './entities/User';
+import { UsersModule } from './app/users/users.module';
+import { TasksModule } from './app/tasks/tasks.module';
+import { Task } from './entities/Task';
+import { HealthModule } from './app/health/health.module';
+import { AuthModule } from './app/auth/auth.module';
 
 @Module({
   imports: [
