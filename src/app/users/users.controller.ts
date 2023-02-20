@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UsersService } from './users.service';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
 import { User } from 'src/entities/User';
 import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
+import { UpdateUserDto } from './dto/UpdateUser';
 
 @Controller('users')
 export class UsersController {
@@ -31,5 +40,13 @@ export class UsersController {
     @Body() createTaskUserDto: CreateTaskUserDto,
   ): Promise<[User, CreateTaskUserDto]> {
     return this.userService.createTaskForUser(userId, createTaskUserDto);
+  }
+
+  @Put(':id')
+  async updateUser(
+    @Param('id') userId: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.updateUser(userId, updateUserDto);
   }
 }

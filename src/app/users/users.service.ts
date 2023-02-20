@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/CreateUser.dto';
 import { Task } from 'src/entities/Task';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
 import { HashHelper } from 'src/helpers/hash.helper';
+import { UpdateUserDto } from './dto/UpdateUser';
 
 @Injectable()
 export class UsersService {
@@ -61,5 +62,23 @@ export class UsersService {
     });
 
     return user;
+  }
+
+  async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+
+    if (updateUserDto.username !== undefined) {
+      user.username = updateUserDto.username;
+    }
+    if (updateUserDto.password !== undefined) {
+      user.password = await HashHelper.hashWithBcrypt(updateUserDto.password);
+    }
+
+    return this.userRepository.save(user);
   }
 }
