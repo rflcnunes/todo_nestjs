@@ -5,6 +5,7 @@ export class CreateTaskUserDto {
   @ApiProperty({
     description: 'The title of the task',
     minimum: 5,
+    type: String,
   })
   @MinLength(5)
   title: string;
@@ -13,6 +14,7 @@ export class CreateTaskUserDto {
     description: 'The description of the task',
     minimum: 5,
     required: false,
+    type: String,
   })
   @MinLength(5)
   description?: string;

@@ -7,6 +7,7 @@ export class UpdateUserDto {
     description: 'The username of the user',
     minimum: 3,
     required: true,
+    type: String,
   })
   @MinLength(3)
   username: string;
@@ -17,6 +18,7 @@ export class UpdateUserDto {
     minimum: 8,
     required: true,
     pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$',
+    type: String,
   })
   @Matches(RegExHelper.password)
   password: string;
