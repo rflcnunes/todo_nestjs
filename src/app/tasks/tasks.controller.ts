@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/UpdateTaskDto';
-import { Task } from 'src/entities/Task';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { DefaultResponse } from '../interfaces/default.response';
 
@@ -31,14 +30,18 @@ export class TasksController {
 
   @Put(':id')
   @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
   async updateTask(
     @Param('id') id: number,
     @Body() updateTaskDto: UpdateTaskDto,
-  ): Promise<Task> {
+  ): Promise<DefaultResponse> {
     try {
-      return this.taskService.updateTask(id, updateTaskDto);
+      return {
+        info: `Task with ID ${id} updated`,
+        data: await this.taskService.updateTask(id, updateTaskDto),
+      };
     } catch (error) {
-      throw new NotFoundException(`Task with id ${id} not found`);
+      throw new NotFoundException(`Task with ID ${id} not found`);
     }
   }
 }
