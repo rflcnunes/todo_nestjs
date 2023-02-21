@@ -29,7 +29,7 @@ import { UsersResponse } from '../../interfaces/users.response';
   name: 'Authorization',
   description: 'Bearer token',
 })
-@ApiTags('Usuários')
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
