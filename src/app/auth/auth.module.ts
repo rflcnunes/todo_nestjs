@@ -15,7 +15,7 @@ console.log(jwtConstants);
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '900s' },
+      signOptions: { expiresIn: '1800s' },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
