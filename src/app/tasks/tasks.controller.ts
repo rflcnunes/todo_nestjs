@@ -8,11 +8,13 @@ import {
   UseGuards,
   HttpCode,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/UpdateTaskDto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { DefaultResponse } from '../../interfaces/default.response';
 
+@ApiTags('Tasks')
 @Controller('tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}

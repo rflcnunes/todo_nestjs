@@ -11,6 +11,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UsersService } from './users.service';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
@@ -19,6 +20,7 @@ import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser';
 import { UsersResponse } from '../../interfaces/users.response';
 
+@ApiTags('Usuários')
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
@@ -26,6 +28,11 @@ export class UsersController {
   @Get()
   @UseGuards(JwtAuthGuard)
   @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    description: 'List of all users',
+  })
+  @ApiBearerAuth()
   async getAllUsers(): Promise<UsersResponse> {
     try {
       const users = await this.userService.getAllUsers();
