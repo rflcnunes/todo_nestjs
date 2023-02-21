@@ -11,7 +11,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiResponse,
+  ApiTags,
+  ApiHeader,
+} from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UsersService } from './users.service';
 import { CreateTaskUserDto } from './dto/CreateTaskUser';
@@ -20,6 +25,10 @@ import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser';
 import { UsersResponse } from '../../interfaces/users.response';
 
+@ApiHeader({
+  name: 'Authorization',
+  description: 'Bearer token',
+})
 @ApiTags('Usuários')
 @Controller('users')
 export class UsersController {
@@ -43,6 +52,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   async getById(@Param('id', ParseIntPipe) id: number): Promise<User> {
     try {
@@ -83,6 +93,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   async updateUser(
     @Param('id') userId: number,
@@ -96,6 +107,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     try {

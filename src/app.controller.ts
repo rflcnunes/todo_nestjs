@@ -6,25 +6,20 @@ import {
   Request,
   Body,
 } from '@nestjs/common';
-import { ApiExcludeController } from '@nestjs/swagger';
+import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { AuthService } from './app/auth/auth.service';
 import { JwtAuthGuard } from './app/auth/jwt-auth.guard';
 import { CreateUserDto } from './app/users/dto/CreateUser.dto';
 import { HashHelper } from './helpers/hash.helper';
 
-@ApiExcludeController()
+@ApiTags('Authentication')
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private authService: AuthService,
   ) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 
   @Post('auth/register')
   async register(@Body() userDto: CreateUserDto) {
@@ -47,6 +42,7 @@ export class AppController {
     return this.authService.login(username, password);
   }
 
+  @ApiExcludeEndpoint()
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
