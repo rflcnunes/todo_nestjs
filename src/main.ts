@@ -9,9 +9,10 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Todo API')
-    .setDescription('The todo API')
+    .setDescription(
+      "To access the protected features of this API, you must authenticate with a valid JWT token. To get the token, log in through Postman by sending a POST request to the 'auth/login' URL. The token will be provided in the server's response.",
+    )
     .setVersion('1.0')
-    .addTag('todo')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
