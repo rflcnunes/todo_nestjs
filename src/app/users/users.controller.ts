@@ -17,7 +17,7 @@ import { CreateTaskUserDto } from './dto/CreateTaskUser';
 import { User } from 'src/entities/User';
 import { JwtAuthGuard } from 'src/app/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser';
-import { UsersResponse } from '../interfaces/users.response';
+import { UsersResponse } from '../../interfaces/users.response';
 
 @Controller('users')
 export class UsersController {

@@ -11,7 +11,7 @@ import {
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/UpdateTaskDto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { DefaultResponse } from '../interfaces/default.response';
+import { DefaultResponse } from '../../interfaces/default.response';
 
 @Controller('tasks')
 export class TasksController {
