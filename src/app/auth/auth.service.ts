@@ -35,4 +35,8 @@ export class AuthService {
     const hashedPassword = await HashHelper.hashWithBcrypt(password);
     return this.usersService.createUser({ username, password: hashedPassword });
   }
+
+  async getUser(username: string) {
+    return this.usersService.findOne(username);
+  }
 }

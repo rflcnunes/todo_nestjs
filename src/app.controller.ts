@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   Body,
+  Param,
 } from '@nestjs/common';
 import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
 import { AppService } from './app.service';
@@ -47,5 +48,10 @@ export class AppController {
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
+  }
+
+  @Get('auth/:username')
+  async getUserByUsername(@Param('username') username: string) {
+    return this.authService.getUser(username);
   }
 }
