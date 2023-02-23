@@ -7,6 +7,7 @@ import {
   NotFoundException,
   UseGuards,
   HttpCode,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiHeader } from '@nestjs/swagger';
 import { TasksService } from './tasks.service';
@@ -46,6 +47,18 @@ export class TasksController {
         info: `Task with ID ${id} updated`,
         data: await this.taskService.updateTask(id, updateTaskDto),
       };
+    } catch (error) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
+    }
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  async deleteTask(@Param('id') id: number): Promise<DefaultResponse> {
+    try {
+      await this.taskService.deleteTask(id);
+      return { info: `Task with ID ${id} deleted` };
     } catch (error) {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }

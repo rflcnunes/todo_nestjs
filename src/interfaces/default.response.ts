@@ -1,4 +1,4 @@
 export interface DefaultResponse {
   info: string;
-  data: any;
+  data?: any;
 }
